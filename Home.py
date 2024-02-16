@@ -4,15 +4,15 @@ import pandas as pd
 # Create a function to handle the Streamlit app logic
 def streamlit_app():
     # Use Streamlit to create the UI components and logic
-    st.title("Heatwave Risk Assessment")
+    st.title("Heatscore - Heat Risk Assessment")
 
     # Define the options and corresponding scores for each category
     building_types = {
         "Ground floor flat": -15,
         "Upper floor flats": 9,
-        "Bungalow": -2,
-        "Rest* cavity": -1,
-        "Rest* solid": 4
+        "Bungalow houses": -2,
+        "Terraced, Semi-detached, detached houses (non-bungalow) with cavity walls": -1,
+        "Terraced, Semi-detached, detached houses (non-bungalow) with solid walls": 4
     }
     location_types = {
         "Greenery nearby (0 °C UHI)": -3,
