@@ -10,7 +10,7 @@ def streamlit_app():
     building_types = {
         "Ground floor flat": -15,
         "Upper floor flats": 9,
-        "Bungalow houses": -2,
+        "Bungalow houses": -7,
         "Terraced, Semi-detached, detached houses (non-bungalow) with cavity walls": -1,
         "Terraced, Semi-detached, detached houses (non-bungalow) with solid walls": 4
     }
@@ -23,7 +23,7 @@ def streamlit_app():
         "No heatwave year": -3,
         "1 day heatwave": 4,
         "3 days heatwave": 6,
-        "5+ days heatwave": 9
+        "5+ days heatwave": 11
     }
     years = {
         "Current": -2,
