@@ -11,8 +11,8 @@ def streamlit_app():
         "Ground floor flat": -15,
         "Upper floor flats": 9,
         "Bungalow houses": -7,
-        "Terraced, Semi-detached, detached houses (non-bungalow) with cavity walls": -1,
-        "Terraced, Semi-detached, detached houses (non-bungalow) with solid walls": 4
+        "Terraced, Semi-detached, detached houses (non-bungalow) with cavity walls (post-1945)": -1,
+        "Terraced, Semi-detached, detached houses (non-bungalow) with solid walls (pre-1945)": 4
     }
     location_types = {
         "Greenery nearby (0 °C UHI)": -3,
@@ -20,7 +20,7 @@ def streamlit_app():
         "No greenery nearby (2 °C UHI)": 3
     }
     heatwave_durations = {
-        "No heatwave year": -3,
+        "No heatwave": -3,
         "1 day heatwave": 4,
         "3 days heatwave": 6,
         "5+ days heatwave": 11
