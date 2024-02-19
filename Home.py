@@ -27,7 +27,7 @@ years = {"Current": ("TMY", "2022"),
         "2080": "2080"}
 
 #SET Degree hours input
-file_path = '/data/SET_Max_dh_scoring.xlsx'
+file_path = 'data/SET_Max_dh_scoring.xlsx'
 
 #Based on building location, heatwave duration and year create the scenario string for lookup in the xlsx file
 def create_scenario(location_type, heatwave_duration, year):
