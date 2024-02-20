@@ -89,7 +89,7 @@ def streamlit_app():
     st.markdown("""
        #### Additional Information
        The heat assessment is based on building simulations using the methodology presented in the Heatalyzer paper linked below. The scoring is determined by the maximum Degree hours over some week in the most resilient zone of the building, with a value of at least 120 resulting in a risk level of 10, indicating unlivable conditions. This is in line with the SET Degree hours threshold used in LEED's passive survivability pilot.
-       - Heatalyzer paper for the methodology here (*Link to be added*)
+       - Heatalyzer paper on the methodology [here](https://www.cambridge.org/engage/coe/article-details/65ccc858e9ebbb4db958f3e9)
        - Code for the tool is available on the Heatalyzer [GitHub](https://github.com/lcapol/Heatalyzer).
        - [LEED's passive survivability pilot](https://www.usgbc.org/credits/passivesurvivability)
 
