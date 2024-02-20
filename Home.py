@@ -9,7 +9,7 @@ building_types = {"Ground floor flats": "Ground floor flat",
                   "Mid-terraced houses (non-bungalow) with cavity walls (post-1945)": "Mid terrace (Cavity/solid)",
                   "Mid-terraced houses (non-bungalow) with solid walls (pre-1945)": "Mid terrace (Solid/suspended)",
                   "End-terraced, Semi-detached, detached houses (non-bungalow) with cavity walls (post-1945)": "Compact house (semi-d)",
-                  "End-erraced, Semi-detached, detached houses (non-bungalow) with solid walls (pre-1945)": "Medium house, solid (semi-d)"}
+                  "End-terraced, Semi-detached, detached houses (non-bungalow) with solid walls (pre-1945)": "Medium house, solid (semi-d)"}
 
 location_types =  {"Greenery nearby (0 °C UHI)": "",
                    "Some greenery nearby (1 °C UHI)": " + UHI 1",
