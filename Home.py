@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-
 building_types = {"Ground floor flats": "Ground floor flat",
                  "Mid floor flats": "Mid floor flat",
                   "Top floor flats": "Top floor flat",
@@ -27,7 +26,8 @@ years = {"Current": ("TMY", "2022"),
         "2080": "2080"}
 
 #SET Degree hours input
-file_path = 'data/SET_Max_dh_scoring.xlsx'
+file_path_dh = 'data/SET_Max_dh_scoring.xlsx'
+file_path_new_score = 'data/new_score.xlsx'
 
 #Based on building location, heatwave duration and year create the scenario string for lookup in the xlsx file
 def create_scenario(location_type, heatwave_duration, year):
@@ -64,37 +64,70 @@ def streamlit_app():
     heatwave_duration = st.selectbox("Choose Heatwave Duration", options=list(heatwave_durations.keys()))
     year = st.selectbox("Choose Year", options=list(years.keys()))
 
-    file = pd.read_excel(file_path, header=1, index_col=2).iloc[:,2:]
+    file_dh = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Degree Hours').iloc[:,2:]
+    file_dh_score = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Clipped Scoring').iloc[:,2:]
+    file_ns_el = pd.read_excel(file_path_new_score, header=1, index_col=2, sheet_name='Elderly').iloc[:,2:]
+    file_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=2, sheet_name='Young').iloc[:,2:]
 
     scenario = create_scenario(location_type, heatwave_duration, year)
     archetype = building_types[building_type]
-    score = file.loc[scenario, archetype]
+    score_dh = file_dh_score.loc[scenario, archetype]
+    dh = file_dh.loc[scenario, archetype]
+    h_ns_el = file_ns_el.loc[scenario, archetype]
+    h_ns_y = file_ns_y.loc[scenario, archetype]
 
-    st.metric(label="Risk Level", value=score, delta=None)
+    col1, col2, col3 = st.columns(3)
 
-    # Convert score to a progress bar with contextual color coding
-    progress_value = score / 10
-    st.progress(progress_value)
+    with col1:
+        st.metric(label="Risk Level SET Degree hours", value=score_dh, delta=None)
 
-    # Contextual message about the risk level
-    if score < 7:
-        st.success("Risk is within acceptable limits.")
-    elif score < 10:
-        st.warning("High risk! Immediate attention required.")
-    else:
-        st.error("Critical risk level! Take action now.")
+        st.markdown(f"{dh} Degree hours")
 
-        # Add spacing and structure to the additional information section
-    st.markdown("---")
-    st.markdown("""
-       #### Additional Information
-       The heat assessment is based on building simulations using the methodology presented in the Heatalyzer paper linked below. The scoring is determined by the maximum Degree hours over some week in the most resilient zone of the building, with a value of at least 120 resulting in a risk level of 10, indicating unlivable conditions. This is in line with the SET Degree hours threshold used in LEED's passive survivability pilot.
-       - Heatalyzer paper on the methodology [here](https://www.cambridge.org/engage/coe/article-details/65ccc858e9ebbb4db958f3e9)
-       - Code for the tool is available on the Heatalyzer [GitHub](https://github.com/lcapol/Heatalyzer).
-       - [LEED's passive survivability pilot](https://www.usgbc.org/credits/passivesurvivability)
+        progress_value = score_dh / 10
+        st.progress(progress_value)
 
-       It is essential to prepare now for these risks. The [Solace](https://sites.google.com/view/ucsolace/) project aims to create a global suite of location-specific solutions encompassing both technical and non-technical aspects. Information on existing solutions for buildings is included on the website.
-       """)
+        #Contextual message about the risk level
+        if score_dh < 7:
+            st.success("Low to moderate risk.")
+        elif score_dh < 10:
+            st.warning("Significant risk.")
+        else:
+           st.error("Critical risk.")
+
+    with col2:
+        score_ns_el = min(h_ns_el, 10)
+        st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
+
+        st.markdown(f"{h_ns_el} hours")
+
+        progress_value = score_ns_el / 10
+        st.progress(progress_value)
+
+        if score_ns_el < 7:
+            st.success("Low to moderate risk.")
+        elif score_ns_el < 10:
+            st.warning("Significant risk.")
+        else:
+            st.error("Critical risk.")
+
+    with col3:
+        score_ns_y = min(h_ns_y, 10)
+        st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
+
+        st.markdown(f"{h_ns_y} hours")
+
+        progress_value = score_ns_y / 10
+        st.progress(progress_value)
+
+
+        if score_ns_y < 7:
+            st.success("Low to moderate risk.")
+        elif score_ns_y < 10:
+            st.warning("Significant risk.")
+        else:
+            st.error("Critical risk.")
+
+
 
 if __name__ == "__main__":
     streamlit_app()
