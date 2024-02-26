@@ -27,7 +27,8 @@ years = {"Current": ("TMY", "2022"),
 
 #SET Degree hours input
 file_path_dh = 'data/SET_Max_dh_scoring.xlsx'
-file_path_new_score = 'data/new_score.xlsx'
+file_path_new_score = 'data/score_vector_outputs.xlsx'
+
 
 #Based on building location, heatwave duration and year create the scenario string for lookup in the xlsx file
 def create_scenario(location_type, heatwave_duration, year):
@@ -64,24 +65,55 @@ def streamlit_app():
     heatwave_duration = st.selectbox("Choose Heatwave Duration", options=list(heatwave_durations.keys()))
     year = st.selectbox("Choose Year", options=list(years.keys()))
 
-    file_dh = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Degree Hours').iloc[:,2:]
-    file_dh_score = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Clipped Scoring').iloc[:,2:]
-    file_ns_el = pd.read_excel(file_path_new_score, header=1, index_col=2, sheet_name='Elderly').iloc[:,2:]
-    file_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=2, sheet_name='Young').iloc[:,2:]
+    # Read in the files
+    # Degree hours and degree hours score
+    file_dh = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Degree Hours').iloc[:, 2:]
+    file_dh_score = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Clipped Scoring').iloc[:, 2:]
+    #Risk score elderly
+    file_ns_el_kl = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Elderly_KL').iloc[:, 1:]
+    file_ns_el_bd = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Elderly_BD').iloc[:, 1:]
+    #Risk score young
+    file_ns_y_kl = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Young_KL').iloc[:, 1:]
+    file_ns_y_bd = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Young_BD').iloc[:, 1:]
 
     scenario = create_scenario(location_type, heatwave_duration, year)
     archetype = building_types[building_type]
     score_dh = file_dh_score.loc[scenario, archetype]
     dh = file_dh.loc[scenario, archetype]
-    h_ns_el = file_ns_el.loc[scenario, archetype]
-    h_ns_y = file_ns_y.loc[scenario, archetype]
+    score_ns_el_kl = file_ns_el_kl.loc[scenario, archetype]
+    score_ns_el_bd = file_ns_el_bd.loc[scenario, archetype]
+    score_ns_y_kl = file_ns_y_kl.loc[scenario, archetype]
+    score_ns_y_bd = file_ns_y_bd.loc[scenario, archetype]
+
+    #extract number of hours of different activities possible for less affected zone
+    if score_ns_el_kl < score_ns_el_bd:
+        el_zone = "_KL"
+        score_ns_el = score_ns_el_kl
+    else:
+        el_zone= "_BD"
+        score_ns_el = score_ns_el_bd
+
+    if score_ns_y_kl < score_ns_y_bd:
+        y_zone = "_KL"
+        score_ns_y = score_ns_y_kl
+    else:
+        y_zone= "_BD"
+        score_ns_y = score_ns_y_bd
+
+    hours_mv_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_MV' + el_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_la_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_LA' + el_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_nl_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NL' + el_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_ns_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NS' + el_zone).iloc[:, 1:].loc[scenario, archetype]
+
+    hours_mv_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_MV' + y_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_la_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_LA' + y_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_nl_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NL' + y_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NS' + y_zone).iloc[:, 1:].loc[scenario, archetype]
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.metric(label="Risk Level SET Degree hours", value=score_dh, delta=None)
-
-        st.markdown(f"{dh} Degree hours")
 
         progress_value = score_dh / 10
         st.progress(progress_value)
@@ -94,11 +126,11 @@ def streamlit_app():
         else:
            st.error("Critical risk.")
 
-    with col2:
-        score_ns_el = min(h_ns_el, 10)
-        st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
+        st.markdown(f"{dh} Degree hours")
 
-        st.markdown(f"{h_ns_el} hours")
+    with col2:
+        score_ns_el = min(round(10*score_ns_el, 2), 10.0)
+        st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
 
         progress_value = score_ns_el / 10
         st.progress(progress_value)
@@ -110,15 +142,19 @@ def streamlit_app():
         else:
             st.error("Critical risk.")
 
-    with col3:
-        score_ns_y = min(h_ns_y, 10)
-        st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
 
-        st.markdown(f"{h_ns_y} hours")
+        st.markdown(f"Moderate to vigorous activities: {hours_mv_el} hours")
+        st.markdown(f"Light activities: {hours_la_el} hours")
+        st.markdown(f"Not liveable: {hours_nl_el} hours")
+        st.markdown(f"Not survivable: {hours_ns_el} hours")
+
+
+    with col3:
+        score_ns_y = min(round(10*score_ns_y, 2), 10.0)
+        st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
 
         progress_value = score_ns_y / 10
         st.progress(progress_value)
-
 
         if score_ns_y < 7:
             st.success("Low to moderate risk.")
@@ -126,6 +162,11 @@ def streamlit_app():
             st.warning("Significant risk.")
         else:
             st.error("Critical risk.")
+
+        st.markdown(f"Moderate to vigorous activities: {hours_mv_y} hours")
+        st.markdown(f"Light activities: {hours_la_y} hours")
+        st.markdown(f"Not liveable: {hours_nl_y} hours")
+        st.markdown(f"Not survivable: {hours_ns_y} hours")
 
 
 
