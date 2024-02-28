@@ -54,8 +54,8 @@ def streamlit_app():
     # Use Streamlit to create the UI components and logic
     st.title("Heatscore")
     st.markdown("""
-        ## Heatwave Risk Assessment for the UK
-        Assess the potential impact of heatwaves on building occupants across the UK. 
+        ## Heatwave Risk Assessment for London
+        Assess the potential impact of heatwaves on building occupants in London. 
         Select your parameters below to evaluate the risk level. 
         """)
 
@@ -110,37 +110,45 @@ def streamlit_app():
     hours_nl_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NL' + y_zone).iloc[:, 1:].loc[scenario, archetype]
     hours_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NS' + y_zone).iloc[:, 1:].loc[scenario, archetype]
 
-    col1, col2, col3 = st.columns(3)
+    #st.metric(label="Risk Level SET Degree hours", value=score_dh, delta=None)
+
+    #progress_value = score_dh / 10
+    #st.progress(progress_value)
+
+    #Contextual message about the risk level
+    #if score_dh < 7:
+    #    st.success("Low to moderate risk.")
+    #elif score_dh < 10:
+    #    st.warning("Significant risk.")
+    #else:
+    #   st.error("Critical risk.")
+    st.markdown("---")
+
+    st.markdown("#### LEED's Passive Survivability")
+
+    st.markdown(f"{dh} Degree hours")
+
+    st.markdown("---")
+
+    st.markdown("#### Safe Activities Hours")
+
+    col1, col2 = st.columns(2)
 
     with col1:
-        st.metric(label="Risk Level SET Degree hours", value=score_dh, delta=None)
+        st.markdown("##### Elderly (over 65 years)")
 
-        progress_value = score_dh / 10
-        st.progress(progress_value)
+        #score_ns_el = min(round(10*score_ns_el, 2), 10.0)
+        #st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
 
-        #Contextual message about the risk level
-        if score_dh < 7:
-            st.success("Low to moderate risk.")
-        elif score_dh < 10:
-            st.warning("Significant risk.")
-        else:
-           st.error("Critical risk.")
+        #progress_value = score_ns_el / 10
+        #st.progress(progress_value)
 
-        st.markdown(f"{dh} Degree hours")
-
-    with col2:
-        score_ns_el = min(round(10*score_ns_el, 2), 10.0)
-        st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
-
-        progress_value = score_ns_el / 10
-        st.progress(progress_value)
-
-        if score_ns_el < 7:
-            st.success("Low to moderate risk.")
-        elif score_ns_el < 10:
-            st.warning("Significant risk.")
-        else:
-            st.error("Critical risk.")
+        #if score_ns_el < 7:
+        #    st.success("Low to moderate risk.")
+        #elif score_ns_el < 10:
+        #    st.warning("Significant risk.")
+        #else:
+        #    st.error("Critical risk.")
 
 
         st.markdown(f"Moderate to vigorous activities: {hours_mv_el} hours")
@@ -149,19 +157,20 @@ def streamlit_app():
         st.markdown(f"Not survivable: {hours_ns_el} hours")
 
 
-    with col3:
-        score_ns_y = min(round(10*score_ns_y, 2), 10.0)
-        st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
+    with col2:
+        st.markdown("##### Young (18-45 years)")
+        #score_ns_y = min(round(10*score_ns_y, 2), 10.0)
+        #st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
 
-        progress_value = score_ns_y / 10
-        st.progress(progress_value)
+        #progress_value = score_ns_y / 10
+        #st.progress(progress_value)
 
-        if score_ns_y < 7:
-            st.success("Low to moderate risk.")
-        elif score_ns_y < 10:
-            st.warning("Significant risk.")
-        else:
-            st.error("Critical risk.")
+        #if score_ns_y < 7:
+        #    st.success("Low to moderate risk.")
+        #elif score_ns_y < 10:
+        #    st.warning("Significant risk.")
+        #else:
+        #    st.error("Critical risk.")
 
         st.markdown(f"Moderate to vigorous activities: {hours_mv_y} hours")
         st.markdown(f"Light activities: {hours_la_y} hours")
