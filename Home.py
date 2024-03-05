@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from st_aggrid import AgGrid
+
 
 building_types = {"Ground floor flats": "Ground floor flat",
                  "Mid floor flats": "Mid floor flat",
@@ -132,49 +134,14 @@ def streamlit_app():
 
     st.markdown("#### Activity Hours")
 
-    col1, col2 = st.columns(2)
+    data = {
+        "Activity": ["Moderate to vigorous activities", "Light activities", "Not liveable", "Not survivable"],
+        "Young (18-45 years)": [hours_mv_y, hours_la_y, hours_nl_y, hours_ns_y],
+        "Elderly (over 65 years)": [hours_mv_el, hours_la_el, hours_nl_el, hours_ns_el],
+    }
 
-    with col1:
-        st.markdown("##### Young (18-45 years)")
-        #score_ns_y = min(round(10*score_ns_y, 2), 10.0)
-        #st.metric(label="Risk Level Young (18-45 years)", value=score_ns_y, delta=None)
-
-        #progress_value = score_ns_y / 10
-        #st.progress(progress_value)
-
-        #if score_ns_y < 7:
-        #    st.success("Low to moderate risk.")
-        #elif score_ns_y < 10:
-        #    st.warning("Significant risk.")
-        #else:
-        #    st.error("Critical risk.")
-
-        st.markdown(f"Moderate to vigorous activities: {hours_mv_y} hours")
-        st.markdown(f"Light activities: {hours_la_y} hours")
-        st.markdown(f"Not liveable: {hours_nl_y} hours")
-        st.markdown(f"Not survivable: {hours_ns_y} hours")
-
-    with col2:
-        st.markdown("##### Elderly (over 65 years)")
-
-        #score_ns_el = min(round(10*score_ns_el, 2), 10.0)
-        #st.metric(label="Risk Level Elderly (over 65 years)", value=score_ns_el, delta=None)
-
-        #progress_value = score_ns_el / 10
-        #st.progress(progress_value)
-
-        #if score_ns_el < 7:
-        #    st.success("Low to moderate risk.")
-        #elif score_ns_el < 10:
-        #    st.warning("Significant risk.")
-        #else:
-        #    st.error("Critical risk.")
-
-
-        st.markdown(f"Moderate to vigorous activities: {hours_mv_el} hours")
-        st.markdown(f"Light activities: {hours_la_el} hours")
-        st.markdown(f"Not liveable: {hours_nl_el} hours")
-        st.markdown(f"Not survivable: {hours_ns_el} hours")
+    df = pd.DataFrame(data)
+    AgGrid(df, fit_columns_on_grid_load=True, theme = 'alpine')
 
 
 if __name__ == "__main__":
