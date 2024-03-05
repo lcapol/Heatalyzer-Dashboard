@@ -1,1 +1,1 @@
-# Heatscore
+# Heatalyzer Dashboard
