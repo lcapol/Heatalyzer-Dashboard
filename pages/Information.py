@@ -13,7 +13,7 @@ def information_page():
     Energy & Industrial Strategy (BEIS), which defines archetypes representing 88% of Britain's dwellings. 
     These archetypes are based on the most common combinations of dwelling types (flats, terraced houses, bungalows, semi-detached, and detached houses) 
     and construction forms (cavity or solid walls, and solid or suspended timber floors). 
-    The Heatscore provides results for these building types by allowing the selection of 8 archetypes representing the majority of the housing stock.
+    The Heatalyzer Dashboard provides results for these building types by allowing the selection of 8 archetypes representing the majority of the housing stock.
     """)
     st.markdown("""
     Descriptions of the 8 provided housing types:

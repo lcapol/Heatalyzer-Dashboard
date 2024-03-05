@@ -52,7 +52,7 @@ def create_scenario(location_type, heatwave_duration, year):
 
 def streamlit_app():
     # Use Streamlit to create the UI components and logic
-    st.title("Heatscore")
+    st.title("Heatalyzer Dashboard")
     st.markdown("""
         ## Heatwave Risk Assessment for London
         Assess the potential impact of heatwaves on building occupants in London. 
