@@ -76,9 +76,9 @@ def information_page():
     st.markdown("---")
 
 
-    st.markdown("### Methodologies for Risk Level Assessment")
+    st.markdown("### Methodologies for Occupant Liveability Assessment")
     st.markdown("""
-    To assess the potential impact of heatwaves on building occupants, three risk assessments are reported based on two methodologies. The approaches used are based on livability limits for SET Degree hours as described in LEED's passive survivability pilot ([here](https://www.usgbc.org/credits/passivesurvivability)) and evaluation of the number of hours of different possible activity levels for two age groups (18-45 years and over 65 years) based on more recent work ([here](https://www.nature.com/articles/s41467-023-43121-5)). 
+    To assess the potential impact of heatwaves on building occupants, two methodologies are employed. The approaches used are based on livability limits for SET Degree hours as described in LEED's passive survivability pilot ([here](https://www.usgbc.org/credits/passivesurvivability)) and evaluation of the number of hours of different possible activity levels for two age groups (18-45 years and over 65 years) based on recent work ([here](https://www.nature.com/articles/s41467-023-43121-5)). 
     The goal is to offer insights into the thermal comfort and potential health risks occupants face during extreme heat events. 
 
     **1. SET Degree hours:**
@@ -86,8 +86,8 @@ def information_page():
     We are reporting the Dh of the most resilient housing zone.
 
     **2. Activity hours:**
-    Using the liveability ranges described in the Heatalyzer paper, this assessment counts the number of hours over the hottest summer week that occupants can perform moderate to vigorous physical activities (3.0 or more METs),
-    where only light physical activities (1.5-3.0 METs) are possible, and the number of hours that are not liveable and not survivable anymore. This calculation is performed separately for young (18-45 years) and elderly (over 65 years) occupants.
+    Using the liveability ranges described in the Heatalyzer paper, this assessment counts the number of hours over the hottest summer week that occupants can perform different levels of physical activities during the day-time (06:00-22:00). The possible levels of safe sustained activities include
+    moderate to vigorous physical activities (3.0 or more METs), light physical activities (1.5-3.0 METs), no activities (not liveable) and conditions that are not survivable anymore. This calculation is performed separately for young (18-45 years) and elderly (over 65 years) occupants. The number of total hours add up to 112 (7*16) over the hottest week. 
     """)
     # , to align with standards that suggest no more than 3-5% of occupied hours should exceed comfort limits.
 
