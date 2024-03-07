@@ -56,8 +56,8 @@ def streamlit_app():
     st.title("Heatalyzer Dashboard")
     st.markdown("""
         ## Heatwave Risk Assessment for London
-        Assess the potential impact of heatwaves on building occupants in London. 
-        Select your parameters below to evaluate the risk level. 
+        Assess the impact of heatwaves on building occupants in London. 
+        Select your parameters below to evaluate the risk. 
         """)
 
     # Use Streamlit to create selection boxes for each category
