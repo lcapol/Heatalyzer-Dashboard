@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from st_aggrid import AgGrid
 
 
 building_types = {"Ground floor flats": "Ground floor flat",
@@ -126,13 +125,13 @@ def streamlit_app():
     #   st.error("Critical risk.")
     st.markdown("---")
 
-    st.markdown("#### LEED's Passive Survivability")
+    st.markdown("#### LEED's passive survivability")
 
-    st.markdown(f"{dh} Degree hours")
+    st.markdown(f"{dh} SET hours")
 
     st.markdown("---")
 
-    st.markdown("#### Activity Hours")
+    st.markdown("#### Activity hours")
 
     data = {
         "Activity": ["Moderate to vigorous activities", "Light activities", "Not liveable", "Not survivable"],
@@ -141,7 +140,8 @@ def streamlit_app():
     }
 
     df = pd.DataFrame(data)
-    AgGrid(df, fit_columns_on_grid_load=True, theme = 'alpine')
+    st.dataframe(df.set_index(df.columns[0]), use_container_width=True)
+
 
 
 if __name__ == "__main__":
