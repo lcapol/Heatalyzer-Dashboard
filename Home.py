@@ -55,8 +55,8 @@ def streamlit_app():
     # Use Streamlit to create the UI components and logic
     st.title("Heatalyzer Dashboard")
     st.markdown("""
-        ## Heatwave Risk Assessment for London
-        Assess the impact of heatwaves on building occupants in London. 
+        ## Liveability during Heatwaves in London
+        Assess the impact of heatwaves on the liveability of building occupants in London. 
         Select your parameters below to evaluate the risk. 
         """)
 
