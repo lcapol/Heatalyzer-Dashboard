@@ -135,7 +135,7 @@ def streamlit_app():
 
     data = {
         "Activity": ["Moderate to vigorous activities", "Light activities", "Not liveable", "Not survivable"],
-        "Young (18-45 years)": [hours_mv_y, hours_la_y, hours_nl_y, hours_ns_y],
+        "Young (18-40 years)": [hours_mv_y, hours_la_y, hours_nl_y, hours_ns_y],
         "Elderly (over 65 years)": [hours_mv_el, hours_la_el, hours_nl_el, hours_ns_el],
     }
 
