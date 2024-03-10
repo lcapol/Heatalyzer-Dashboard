@@ -26,9 +26,11 @@ years = {"Current": ("TMY", "2022"),
         "2050": "2050",
         "2080": "2080"}
 
+zones = ['Kitchen and Living Area', 'Bedroom']
+
 #SET Degree hours input
-file_path_dh = 'data/SET_Max_dh_scoring.xlsx'
-file_path_new_score = 'data/score_vector_outputs.xlsx'
+file_path_dh = 'data/SET_Max_dh.xlsx'
+file_path_new_score = 'data/activity_hours_outputs.xlsx'
 
 
 #Based on building location, heatwave duration and year create the scenario string for lookup in the xlsx file
@@ -62,67 +64,36 @@ def streamlit_app():
 
     # Use Streamlit to create selection boxes for each category
     building_type = st.selectbox("Choose Building Type", options=list(building_types.keys()))
+    zone = st.selectbox("Choose Building Zone", options=zones)
     location_type = st.selectbox("Choose Location", options=list(location_types.keys()))
     heatwave_duration = st.selectbox("Choose Heatwave Duration", options=list(heatwave_durations.keys()))
     year = st.selectbox("Choose Year", options=list(years.keys()))
 
+
+    if zone == 'Kitchen and Living Area':
+        zone_end = "_KL"
+    else:
+        zone_end = "_BD"
+
+
     # Read in the files
     # Degree hours and degree hours score
-    file_dh = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Degree Hours').iloc[:, 2:]
-    file_dh_score = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Clipped Scoring').iloc[:, 2:]
-    #Risk score elderly
-    file_ns_el_kl = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Elderly_KL').iloc[:, 1:]
-    file_ns_el_bd = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Elderly_BD').iloc[:, 1:]
-    #Risk score young
-    file_ns_y_kl = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Young_KL').iloc[:, 1:]
-    file_ns_y_bd = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Score_Young_BD').iloc[:, 1:]
-
     scenario = create_scenario(location_type, heatwave_duration, year)
     archetype = building_types[building_type]
-    score_dh = file_dh_score.loc[scenario, archetype]
-    dh = file_dh.loc[scenario, archetype]
-    score_ns_el_kl = file_ns_el_kl.loc[scenario, archetype]
-    score_ns_el_bd = file_ns_el_bd.loc[scenario, archetype]
-    score_ns_y_kl = file_ns_y_kl.loc[scenario, archetype]
-    score_ns_y_bd = file_ns_y_bd.loc[scenario, archetype]
 
-    #extract number of hours of different activities possible for less affected zone
-    if score_ns_el_kl < score_ns_el_bd:
-        el_zone = "_KL"
-        score_ns_el = score_ns_el_kl
-    else:
-        el_zone= "_BD"
-        score_ns_el = score_ns_el_bd
+    dh = pd.read_excel(file_path_dh, header=1, index_col=2, sheet_name='Dh' + zone_end).iloc[:, 2:].loc[scenario, archetype]
 
-    if score_ns_y_kl < score_ns_y_bd:
-        y_zone = "_KL"
-        score_ns_y = score_ns_y_kl
-    else:
-        y_zone= "_BD"
-        score_ns_y = score_ns_y_bd
+    hours_mv_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_MV' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_la_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_LA' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_nl_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NL' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_ns_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NS' + zone_end).iloc[:, 1:].loc[scenario, archetype]
 
-    hours_mv_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_MV' + el_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_la_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_LA' + el_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_nl_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NL' + el_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_ns_el = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Elderly_NS' + el_zone).iloc[:, 1:].loc[scenario, archetype]
+    hours_mv_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_MV' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_la_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_LA' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_nl_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NL' + zone_end).iloc[:, 1:].loc[scenario, archetype]
+    hours_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NS' + zone_end).iloc[:, 1:].loc[scenario, archetype]
 
-    hours_mv_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_MV' + y_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_la_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_LA' + y_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_nl_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NL' + y_zone).iloc[:, 1:].loc[scenario, archetype]
-    hours_ns_y = pd.read_excel(file_path_new_score, header=1, index_col=1, sheet_name='Young_NS' + y_zone).iloc[:, 1:].loc[scenario, archetype]
 
-    #st.metric(label="Risk Level SET Degree hours", value=score_dh, delta=None)
-
-    #progress_value = score_dh / 10
-    #st.progress(progress_value)
-
-    #Contextual message about the risk level
-    #if score_dh < 7:
-    #    st.success("Low to moderate risk.")
-    #elif score_dh < 10:
-    #    st.warning("Significant risk.")
-    #else:
-    #   st.error("Critical risk.")
     st.markdown("---")
 
     st.markdown("#### LEED's passive survivability")
