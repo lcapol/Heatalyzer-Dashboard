@@ -7,16 +7,16 @@ def information_page():
 
     st.markdown("### Selection Options")
 
-    st.markdown("#### Building Types")
+    st.markdown("#### Building Type")
 
-    st.markdown("""The selection of building types is based on the [CODE](https://assets.publishing.service.gov.uk/media/632038fee90e077dba7762a6/CODE-Final-Report-WHOLE-FINAL-v20.pdf) study of the UK housing stock by the UK Department for Business, 
+    st.markdown("""The selection of building type is based on the [CODE](https://assets.publishing.service.gov.uk/media/632038fee90e077dba7762a6/CODE-Final-Report-WHOLE-FINAL-v20.pdf) study of the UK housing stock by the UK Department for Business, 
     Energy & Industrial Strategy (BEIS), which defines archetypes representing 88% of Britain's dwellings. 
     These archetypes are based on the most common combinations of dwelling types (flats, terraced houses, bungalows, semi-detached, and detached houses) 
     and construction forms (cavity or solid walls, and solid or suspended timber floors). 
     The Heatalyzer Dashboard provides results for these building types by allowing the selection of 8 archetypes representing the majority of the housing stock.
     """)
     st.markdown("""
-    Descriptions of the 8 provided housing types:
+    Building Type Options:
     - **Ground Floor Flats**: Ground floor flats.
     - **Mid Floor Flats**: Intermediate floor flats.
     - **Top Floor Flats**: Top floor flats with roof.
@@ -25,12 +25,21 @@ def information_page():
     typically found in newer houses built post-1945. 
     - **Mid-terraced houses (non-bungalow) with solid walls (pre-1945)**: Terraced homes with two shared walls and at least two floors (not a bungalow). This construction has solid walls and suspended floors,
     typically found in older houses built pre-1945. 
-    - **End-terraced, Semi-detached, detached houses (non-bungalow) with cavity walls (post-1945)**: Representing end-terraced, semi-detached, or detached houses, with at least two floors (not a bungalow). This construction has cavity walls and solid floors,
+    - **End-terraced, semi-detached, detached houses (non-bungalow) with cavity walls (post-1945)**: Representing end-terraced, semi-detached, or detached houses, with at least two floors (not a bungalow). This construction has cavity walls and solid floors,
     typically found in newer houses built post-1945. 
-    - **End-terraced, Semi-detached, detached houses (non-bungalow) with solid walls (pre-1945)**: Representing end-terraced, semi-detached, or detached houses, with at least two floors (not a bungalow). This construction has solid walls and suspended floors,
+    - **End-terraced, semi-detached, detached houses (non-bungalow) with solid walls (pre-1945)**: Representing end-terraced, semi-detached, or detached houses, with at least two floors (not a bungalow). This construction has solid walls and suspended floors,
     typically found in older houses built pre-1945. 
     """)
 
+    st.markdown("#### Building Zone")
+
+    st.markdown("""The building zone selection is based on the housing zones specified in the archetypes from the CODE study. 
+    All archetypes cover two zones with specific schedules and occupancy patterns for them, including the living and sleeping areas.""")
+
+    st.markdown("""Building Zone Options:
+    - **Kitchen and Living Area**: Zone representing the activity patterns and schedules of occupants in kitchen and living areas.
+    - **Bedroom Area**: Zone representing the activity patterns and schedules of occupants in bedroom areas. 
+    """)
 
     st.markdown("#### Location")
 
@@ -39,7 +48,7 @@ def information_page():
     expected to be higher on average over the summer months compared to rural surroundings. 
      """)
     st.markdown("""
-    Options for the UHI intensity include:
+    Location Options:
     - **Greenery nearby (0 °C UHI)**
     - **Some greenery nearby (1 °C UHI)**
     - **Areas with no greenery nearby (2 °C UHI)**
@@ -52,7 +61,7 @@ def information_page():
     """)
 
     st.markdown("""
-    Options for the heatwave duration include:
+    Heatwave Duration Options:
     - **No heatwave:** Typical weather conditions for the climate during the specified year. 
     - **1 day heatwave:** Heatwave scenario for the specified year. 
     - **3 days heatwave:** Heatwave scenario for the specified year where the peak day lasts 3 days. 
@@ -67,7 +76,7 @@ def information_page():
     """)
 
     st.markdown("""
-    Options for the year include:
+    Year Options:
     - **Current:** Weather scenarios for the current climate conditions.
     - **2030:** Weather scenarios for projected future climate conditions in 2030 according to RCP4.5 sceanrio. 
     - **2050:** Weather scenarios for projected future conditions in 2050 according to RCP4.5 sceanrio. 
