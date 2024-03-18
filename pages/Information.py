@@ -36,10 +36,12 @@ def information_page():
     st.markdown("""The building zone selection is based on the housing zones specified in the archetypes from the CODE study. 
     All archetypes cover two zones with specific schedules and occupancy patterns for them, including the living and sleeping areas.""")
 
-    st.markdown("""Building Zone Options:
-    - **Kitchen and Living Area**: Zone representing the activity patterns and schedules of occupants in kitchen and living areas.
-    - **Bedroom Area**: Zone representing the activity patterns and schedules of occupants in bedroom areas. 
-    """)
+    st.markdown("""
+    Building Zone Options:
+   - **Kitchen and Living Area**
+   - **Bedroom Area**
+   """)
+
 
     st.markdown("#### Location")
 
