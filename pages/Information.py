@@ -16,9 +16,9 @@ def information_page():
     """)
     st.markdown("""
     Building Type Options:
-    - **Ground Floor Flats**: Ground floor flats.
-    - **Mid Floor Flats**: Intermediate floor flats.
-    - **Top Floor Flats**: Top floor flats with roof.
+    - **Ground floor flats**: Ground floor flats.
+    - **Mid floor flats**: Intermediate floor flats.
+    - **Top floor flats**: Top floor flats with roof.
     - **Bungalow houses**: Single-storey homes, any dwelling other than a flat with a ground floor but no first floor.
     - **Mid-terraced houses (non-bungalow) with cavity walls (post-1945)**: Terraced homes with two shared walls and at least two floors (not a bungalow). This construction has cavity walls and solid floors,
     typically found in newer houses built post-1945. 

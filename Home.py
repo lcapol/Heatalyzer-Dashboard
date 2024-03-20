@@ -26,7 +26,7 @@ years = {"Current": ("TMY", "2022"),
         "2050": "2050",
         "2080": "2080"}
 
-zones = ['Kitchen and Living Area', 'Bedroom']
+zones = ['Kitchen and living area', 'Bedroom']
 
 #SET Degree hours input
 file_path_dh = 'data/SET_Max_dh.xlsx'
@@ -58,7 +58,7 @@ def streamlit_app():
     st.title("Heatalyzer Dashboard")
     st.markdown("""
         ## Liveability during Heatwaves in London
-        Assess the impact of heatwaves on the liveability of building occupants in London. 
+        Assess the impact of heatwaves on the liveability of residents in London. 
         Select your parameters below to evaluate the risk. 
         """)
 
@@ -96,13 +96,13 @@ def streamlit_app():
 
     st.markdown("---")
 
-    st.markdown("#### LEED's passive survivability")
+    st.markdown("#### LEED's Passive Survivability")
 
     st.markdown(f"{dh} SET hours")
 
     st.markdown("---")
 
-    st.markdown("#### Activity hours")
+    st.markdown("#### Activity Hours")
 
     data = {
         "Activity": ["Moderate to vigorous activities", "Light activities", "Not liveable", "Not survivable"],
