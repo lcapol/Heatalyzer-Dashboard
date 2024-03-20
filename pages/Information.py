@@ -9,11 +9,10 @@ def information_page():
 
     st.markdown("#### Building Type")
 
-    st.markdown("""The selection of building type is based on the [CODE](https://assets.publishing.service.gov.uk/media/632038fee90e077dba7762a6/CODE-Final-Report-WHOLE-FINAL-v20.pdf) study of the UK housing stock by the UK Department for Business, 
-    Energy & Industrial Strategy (BEIS), which defines archetypes representing 88% of Britain's dwellings. 
-    These archetypes are based on the most common combinations of dwelling types (flats, terraced houses, bungalows, semi-detached, and detached houses) 
+    st.markdown("""The building type selection is based on the UK building archetypes defined by the UK Department for Business, Energy & Industrial Strategy (BEIS) as part of the [CODE](https://assets.publishing.service.gov.uk/media/632038fee90e077dba7762a6/CODE-Final-Report-WHOLE-FINAL-v20.pdf) study. The defined housing types collectively represent 88% of Britain's dwellings. 
+    The archetypes are based on the most common combinations of dwelling types (flats, terraced houses, bungalows, semi-detached, and detached houses) 
     and construction forms (cavity or solid walls, and solid or suspended timber floors). 
-    The Heatalyzer Dashboard provides results for these building types by allowing the selection of 8 archetypes representing the majority of the housing stock.
+    The Heatalyzer dashboard provides results for these building types by allowing users to select out of eight archetypes. 
     """)
     st.markdown("""
     Building Type Options:
@@ -33,8 +32,8 @@ def information_page():
 
     st.markdown("#### Building Zone")
 
-    st.markdown("""The building zone selection is based on the housing zones specified in the archetypes from the CODE study. 
-    All archetypes cover two zones with specific schedules and occupancy patterns for them, including the living and sleeping areas.""")
+    st.markdown("""The building zone selection is based on the housing zones defined in the archetypes from the CODE study. 
+    All archetypes contain both living and sleeping areas, with specific schedules and occupancy patterns specified for them.""")
 
     st.markdown("""
     Building Zone Options:
