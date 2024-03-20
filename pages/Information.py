@@ -37,8 +37,8 @@ def information_page():
 
     st.markdown("""
     Building Zone Options:
-   - **Kitchen and Living Area**
-   - **Bedroom Area**
+   - **Kitchen and living area**
+   - **Bedroom area**
    """)
 
 

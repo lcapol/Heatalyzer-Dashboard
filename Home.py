@@ -26,7 +26,7 @@ years = {"Current": ("TMY", "2022"),
         "2050": "2050",
         "2080": "2080"}
 
-zones = ['Kitchen and living area', 'Bedroom']
+zones = ['Kitchen and living area', 'Bedroom area']
 
 #SET Degree hours input
 file_path_dh = 'data/SET_Max_dh.xlsx'
@@ -70,7 +70,7 @@ def streamlit_app():
     year = st.selectbox("Choose Year", options=list(years.keys()))
 
 
-    if zone == 'Kitchen and Living Area':
+    if zone == 'Kitchen and living area':
         zone_end = "_KL"
     else:
         zone_end = "_BD"
